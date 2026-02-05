@@ -65,7 +65,7 @@
 
         .value {
             font-size: 1.1rem;
-            color: #10b981; /* Green color for success/values */
+            color: #10b981;
         }
 
         .links {
@@ -82,9 +82,15 @@
             border-radius: 6px;
             font-size: 0.9rem;
             transition: 0.3s;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
         }
 
-        .btn:hover { background: var(--accent-orange); }
+        .btn:hover { 
+            background: var(--accent-orange);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -107,10 +113,39 @@
     </div>
 
     <div class="links">
-        <a href="https://1.1.1.1" class="btn">Official Setup</a>
-        <a href="https://1.1.1.1/help" class="btn">Test Connection</a>
+        <a href="https://1.1.1.1" id="btn-official" class="btn" target="_blank">Official Setup</a>
+        <a href="https://1.1.1.1/help" id="btn-test" class="btn" target="_blank">Test Connection</a>
     </div>
 </div>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        
+        // ฟังก์ชันกลางสำหรับการส่ง Event
+        function sendClarityEvent(name) {
+            if (window.clarity) {
+                clarity("event", name);
+                console.log("✅ Clarity Tracked: " + name);
+            }
+        }
+
+        // ดักจับปุ่ม Official Setup
+        const officialBtn = document.getElementById('btn-official');
+        if(officialBtn) {
+            officialBtn.addEventListener('click', function() {
+                sendClarityEvent("click_official_setup");
+            });
+        }
+
+        // ดักจับปุ่ม Test Connection
+        const testBtn = document.getElementById('btn-test');
+        if(testBtn) {
+            testBtn.addEventListener('click', function() {
+                sendClarityEvent("click_test_connection");
+            });
+        }
+    });
+</script>
 
 </body>
 </html>
